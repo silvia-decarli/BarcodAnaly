@@ -125,26 +125,15 @@ metadata <- metadata[-1,] # remove the second line that specifies the data type
 tree <- read_qza("rooted_tree.qza")
 
 # Importing taxonomy
-taxonomy_qiime <- read_qza("taxonomy.qza")
-
 ####import the taxonomy excel formatted file by import dataset.To get this file just unzip the taxonomy.qza until you find the file taxonomy.tsv. Then open excel and adjust the columns.
-
-a_tab = as.matrix(taxonomy_qiime$data)
+#import dataset -> from excel in R environment 
+a_tab = as.matrix(input_taxonomy)
 
 head(a_tab)
 
 summary(a_tab)
 
 str(a_tab)
-
-
-
-##Naming the columns that were separated in the previous command
-#colnames(a_tab) <- c("Kingdom","Phylum","Class","Order","Family","Genus","Confidence")
-
-rownames(a_tab) <- a_tab[,1]
-
-a_tab2 <- a_tab[,-1]
 
 is.na(a_tab2)
 
@@ -180,7 +169,7 @@ tax_table(physeq)[1:5, 1:4]
 
 ###plot of read/abundance distribution according to the characteristic identified in "groups
 plot_read_distribution(physeq, groups = "Groups", plot.type = "density") + theme_biome_utils()
-ggsave("Distribuição_reads.png")
+ggsave("DistribuiÃ§Ã£o_reads.png")
 
 ##Generates a rarefaction file, an error appears, but according to the internet you just ignore it and the file is generated the same
 physeq_rarefy <- rarefy_even_depth(physeq, rngseed=1, sample.size=0.9*min(sample_sums(physeq)), replace=F)
